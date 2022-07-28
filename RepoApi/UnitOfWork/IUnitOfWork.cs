@@ -10,7 +10,7 @@ namespace RepoApi.UnitOfWork
     public interface IUnitOfWork
     {
         public IGenericRepository<Book, int> BookRepository { get; set; } //generic-den gelen
-        //public ILibraryRepository LibraryRepository { get; set; } //ozel metodu olan
+        public ILibraryRepository LibraryRepository { get; set; } //ozel metodu olan
         public Task Commit();
     }
 }

@@ -23,14 +23,6 @@ namespace RepoApi.Controllers
         }
 
 
-
-        //[HttpGet]
-        //public IActionResult GetBook()
-        //{
-        //    var values = _context.Books.ToList();
-        //    return Ok(values);
-        //}
-
         //GetAll
         [HttpGet("all")]
         public async Task<object> GetAll()
@@ -38,6 +30,60 @@ namespace RepoApi.Controllers
             var values = await _unitOfWork.BookRepository.GetAllList();
 
             return values.ToList();
+        }
+
+
+        //Get
+        [HttpGet("book/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+
+            var book = await _unitOfWork.BookRepository.Find(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
+        }
+
+
+        //Create
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] Book book)
+        {
+            await _unitOfWork.BookRepository.Add(book);
+            await _unitOfWork.Commit();
+
+            return Created($"/api/book/book/{book.Id}", book);
+        }
+
+
+        //Update
+        [HttpPut("update")]
+        public async Task<Book> Update(int id, Book newBook)
+        {
+            var book = await _unitOfWork.BookRepository.Find(id);
+
+            book.Name = newBook.Name;
+
+            await _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.Commit();
+
+            return book;
+        }
+
+
+        //Delete
+        [HttpDelete("delete")]
+        public async Task<Book> Delete(int id)
+        {
+            var book = await _unitOfWork.BookRepository.Find(id);
+
+
+            await _unitOfWork.BookRepository.Delete(book);
+            await _unitOfWork.Commit();
+
+            return book;
         }
 
     }

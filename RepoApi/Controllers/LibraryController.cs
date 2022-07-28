@@ -12,19 +12,29 @@ namespace RepoApi.Controllers
     [ApiController]
     public class LibraryController : ControllerBase
     {
-        //private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        //public LibraryController(IUnitOfWork unitOfWork)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //}
+        public LibraryController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
-        //[HttpGet("all")]
-        //public async Task<object> GetAll()
-        //{
-        //    var values = await _unitOfWork.LibraryRepository.GetAllList();
+        [HttpGet("all")]
+        public async Task<object> GetAll()
+        {
+            var values = await _unitOfWork.LibraryRepository.GetAllList();
 
-        //    return values.ToList();
-        //}
+            return values.ToList();
+        }
+
+
+
+        [HttpGet("Test")]
+        public async Task<object> GetName()
+        {
+            var values = await _unitOfWork.LibraryRepository.FindByName("Test");
+
+            return Ok(values);
+        }
     }
 }

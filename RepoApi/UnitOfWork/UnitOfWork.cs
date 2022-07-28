@@ -12,7 +12,7 @@ namespace RepoApi.UnitOfWork
     {
         public IGenericRepository<Book, int> BookRepository { get; set; } //generic-den gelen
 
-        //public ILibraryRepository LibraryRepository { get; set; } //ozel metodu olan
+        public ILibraryRepository LibraryRepository { get; set; } //ozel metodu olan
 
     
         private readonly MyContext _mycontext;
@@ -20,7 +20,7 @@ namespace RepoApi.UnitOfWork
         {
             _mycontext = mycontext;
             BookRepository = new EfRepository<Book, int>(mycontext);
-            //LibraryRepository = new LibraryRepository(mycontext);
+            LibraryRepository = new LibraryRepository(mycontext);
         }
 
 
